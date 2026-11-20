@@ -1,0 +1,151 @@
+# Maschinenlesbares Schema des KnowHow-Graphen.
+# Quelle der Wahrheit fuer Node-Parser (Task 2) und Validator (Task 3).
+# Grundlage: config/05_schema-knoten-kanten.md. Feldnamen deutsch (config/05).
+
+node_types:
+  entscheidung:
+    beschreibung: "Ein Urteil/Beschluss (SUB1)."
+    pflichtfelder: [id, typ, herkunft, gericht, datum]
+    optionale_felder: [az, rechtsgebiet, instanz_weiter, instanz_zurueck, norm_fassung, quelle_drive, quelle_sha, ausgang, quelle_typ, quelle_url, norm_stichtag, rechtskraft, rechtskraft_ab]
+  argument:
+    beschreibung: "Atomare oder zusammengesetzte Substanz-Einheit (SUB2)."
+    # zitat/fundstelle sind nur fuer art: atomar Pflicht (Validator erzwingt das
+    # konditional); ein zusammengesetztes Argument traegt keine eigene Fundstelle.
+    pflichtfelder: [id, typ, art, kernaussage, herkunft]
+    optionale_felder: [zitat, fundstelle, norm_fassung, komponente_von, vorkommen, stuetzt, widerspricht, konkretisiert, quelle_typ, quelle_url, quelle_sha, aussage_funktion, norm_stichtag, quelle_drive, praezedenz_nutzung]
+  argumentstruktur:
+    beschreibung: "Uebertragungsmuster/Baurezept, nach Konzept (SUB3)."
+    pflichtfelder: [id, typ, konzept]
+    optionale_felder: [norm_fassung, uebertraegt_auf]
+  norm:
+    beschreibung: "Eine Normfassung (SUB4)."
+    pflichtfelder: [id, typ, gesetz, paragraph, fassung, gueltig_ab]
+    optionale_felder: [gueltig_bis, inhalt, quelle, nachfolger, quelle_typ, quelle_url, quelle_sha]
+  inkonsistenz:
+    beschreibung: "Gerichtlicher Selbst-Widerspruch innerhalb einer Entscheidung."
+    pflichtfelder: [id, typ, betrifft_entscheidung, angekuendigt, nicht_eingehalten]
+    optionale_felder: [luecke, prozessualer_nutzen]
+  handakte:
+    beschreibung: "Fallakte pro Fall, nach Instanz/Dokument (ARTEFACT1)."
+    pflichtfelder: [id, typ, fall]
+    optionale_felder: [instanz, quelle_drive]
+  factcheck:
+    beschreibung: "Fakt/Nachweis pro Fall (ARTEFACT2)."
+    pflichtfelder: [id, typ, fall]
+    optionale_felder: [tatsache, behauptung, bewertung, beweis_drive, norm_fassung, quelle_typ, quelle_url, quelle_sha]
+  schriftsatz:
+    beschreibung: "Verfahrensstufe (Anspruchsschreiben, Replik, Klage, ...) fuer die Matrix."
+    # fall + datum sind Pflicht: jeder Schriftsatz traegt Fall-Anker und Datum.
+    pflichtfelder: [id, typ, stufe, fall, datum]
+    optionale_felder: []
+  gericht:
+    beschreibung: "Ein Gericht (Knoten des Gerichtsbaums)."
+    pflichtfelder: [id, typ, gerichtsbarkeit]
+    optionale_felder: [rang, ebene_typ, instanz_ueber, kfz]
+
+# Kantenfelder im Frontmatter. Werte sind Listen von Ziel-`id`s.
+edge_types:
+  - instanz_weiter            # Instanzenzug eines konkreten Falls (aufwaerts)
+  - instanz_zurueck           # Instanzenzug eines konkreten Falls (abwaerts)
+  - instanz_ueber             # Gerichtsbaum (statisch)
+  - betrifft_entscheidung     # Inkonsistenz -> die betroffene Entscheidung
+  - verfassungsbeschwerde_gegen
+  - vorlage_nach              # -> EuGH (Art. 267 AEUV)
+  - vorabentscheidung_fuer    # EuGH -> vorlegendes Gericht
+  - komponente_von            # Teil eines zusammengesetzten Arguments
+  - stuetzt
+  - widerspricht
+  - konkretisiert
+  - uebertraegt_auf           # Uebertragungsmuster (SUB2 -> SUB3 -> neues Thema)
+  - norm_fassung              # Bindung an Normfassung
+  - nachfolger                # Normfassungs-Nachfolge (aF -> nF)
+  - vorkommen                 # Occurrence: Argument @ Schriftsatz (mit status, datum)
+
+# Domaenen-Constraints je Kante: erlaubte Quell- und Ziel-Knotentypen.
+# Der Validator meldet EDGE_SOURCE bei falschem Quelltyp und EDGE_TARGET,
+# wenn ein aufgeloestes Ziel den falschen Knotentyp hat (config/05).
+edge_constraints:
+  instanz_weiter:             {quelle: [entscheidung], ziel: [entscheidung]}
+  instanz_zurueck:            {quelle: [entscheidung], ziel: [entscheidung]}
+  instanz_ueber:              {quelle: [gericht], ziel: [gericht]}
+  betrifft_entscheidung:      {quelle: [inkonsistenz], ziel: [entscheidung]}
+  verfassungsbeschwerde_gegen: {quelle: [entscheidung], ziel: [entscheidung]}
+  vorlage_nach:               {quelle: [entscheidung], ziel: [entscheidung]}
+  vorabentscheidung_fuer:     {quelle: [entscheidung], ziel: [entscheidung]}
+  komponente_von:             {quelle: [argument], ziel: [argument]}
+  stuetzt:                    {quelle: [argument], ziel: [argument]}
+  widerspricht:               {quelle: [argument], ziel: [argument]}
+  konkretisiert:              {quelle: [argument], ziel: [argument]}
+  uebertraegt_auf:            {quelle: [argumentstruktur], ziel: [argumentstruktur]}
+  norm_fassung:               {quelle: [entscheidung, argument, argumentstruktur, factcheck], ziel: [norm]}
+  nachfolger:                 {quelle: [norm], ziel: [norm]}
+  vorkommen:                  {quelle: [argument], ziel: [schriftsatz]}
+
+# Werte fuer das Pflichtfeld `art` auf Argument-Knoten.
+argument_arten: [atomar, zusammengesetzt]
+
+# Werte fuer `herkunft`-Praefix (config/03).
+herkunft_praefixe: [eigenfall, rechtsprechung, literatur]
+
+# Kontrollierte Vokabulare (optionale Felder, Validator erzwingt die Enums).
+# Quelle-Typ: Herkunftsart einer Fundstelle. Liste bewusst erweiterbar.
+# Zwei Klassen (config/05 "Quellen-Zweiteilung"):
+#   (A) amtliche Originaerquellen + online-native Materialien -> quelle_url Pflicht
+#       (amtliche_rechtsprechung, amtlicher_normtext, bundestagsdrucksache,
+#        gesetzesmaterialien, enzyklopaedie, fachnews, pressemitteilung)
+#   (B) druck-native Literatur -> Locator ueber `fundstelle` (kein url-Zwang)
+#       (kommentar, fachaufsatz, monografie)
+# Sekundaer-/Tertiaerquellen werden AUFGENOMMEN (nie ausgeschlossen), aber per
+# `wertigkeit` niedriger gewichtet. Eine bindende Rechtsaussage traegt weiter nur
+# die amtliche Originaerquelle; Meinungen werden als Meinungen gefuehrt und duerfen
+# via stuetzt/widerspricht Argumente haerten (Prediction).
+quelle_typen: [amtliche_rechtsprechung, amtlicher_normtext, eigener_schriftsatz, protokoll, bundestagsdrucksache, gesetzesmaterialien, kommentar, fachaufsatz, monografie, enzyklopaedie, fachnews, pressemitteilung, sonstiges]
+# Funktion einer Aussage im Verfahren/Urteil.
+aussage_funktionen: [parteivortrag, tragender_grund, obiter, gerichtlicher_hinweis]
+# Verfahrensausgang einer Entscheidung.
+ausgang_werte: [stattgegeben, abgewiesen, teilweise, vergleich]
+# Status eines Vorkommens (Argument @ Schriftsatz) in der Matrix.
+vorkommen_status_werte: [neu, erneuert, erweitert, beantwortet, teilw_beantwortet, unbeantwortet, fallengelassen, vergessen]
+
+# Reichweite, mit der ein Argument ein Praezedenz dehnt (praezedenz_nutzung.stufe).
+# eng = Kernaussage wortgetreu; vertretbar_weit = textlich gedeckte Ausdehnung;
+# grenzwertig = an der Grenze des Vertretbaren (nicht gebrochen).
+reichweite_stufen: [eng, vertretbar_weit, grenzwertig]
+
+# Reservierter, filterbarer Marker fuer "ehrlich unbekannt" (D35). Erlaubt als Wert
+# dort, wo "unbekannt" ein legitimer realer Zustand ist (NICHT auf Identitaets- oder
+# korrektheitskritischen Feldern); nie stilles Leer, nie erfundener Wert. Nicht graphweit.
+marker_unbekannt: unbekannt
+
+# Wertigkeit v2 (D37/D38) — KEIN freies Override-Feld mehr, rein ABGELEITET
+# (tools/graph/derive.py). Zwei Ebenen + Rechtskraft-Gate:
+#
+# (1) Kategorie `verbindlichkeit` (kategorische Trumpf-Grenze, Skat-Bild):
+verbindlichkeit_klassen: [verbindlich, nicht_verbindlich]
+# `verbindlich` nur: Norm (amtlicher_normtext) ODER rechtskraeftige Apex-Entscheidung.
+# Apex-Gerichte (erweiterbar) — ihre rechtskraeftigen Entscheidungen sind Truempfe:
+apex_gerichte: [BAG, BGH, BVerfG, EuGH]
+# Binding-intern KEINE feste Zahl: Vorrang kontextabhaengig (config/04 Vorrang-Fork;
+# EuGH<->BVerfG Identitaets-/Ultra-vires-Vorbehalt, BGH<->BAG Gemeinsamer Senat).
+#
+# (2) Rechtskraft-Gate (D37, doppelschneidig): voller Trumpf erst mit Rechtskraft.
+rechtskraft_werte: [rechtskraeftig, nicht_rechtskraeftig, unbekannt]
+# Apex + nicht rechtskraeftig = "schwebend": nutzbar MIT Hinweis, kein voller Trumpf,
+# spiegelbildlich Angriffsflaeche. `unbekannt` wird konservativ wie nicht_rechtskraeftig.
+#
+# (3) Fein-Rang NUR in der Unterklasse (nicht_verbindlich): kleiner = staerker, mit
+# Headroom (einfuegbar, "von oben nach unten"); verbindliche Quellen haben KEINEN
+# Fein-Rang. Ableitung aus quelle_typ (amtliche_rechtsprechung = Instanz/Apex-ohne-RK):
+fein_rang_ableitung:
+  amtliche_rechtsprechung: 10
+  bundestagsdrucksache: 20
+  gesetzesmaterialien: 20
+  kommentar: 30
+  fachaufsatz: 40
+  monografie: 40
+  enzyklopaedie: 50
+  fachnews: 50
+  pressemitteilung: 50
+  eigener_schriftsatz: 60
+  protokoll: 70
+  sonstiges: 70

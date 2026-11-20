@@ -1,0 +1,8 @@
+# SDD-Workspace (git-ignorierter Scratch: Ledger, Briefs, Review-Pakete)
+.superpowers/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
