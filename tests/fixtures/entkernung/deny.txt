@@ -1,0 +1,6 @@
+# Test-Deny-Liste (neutrale Platzhalter, KEINE realen Namen). >= 5 Token.
+GEHEIMNAME
+AZ-12345
+KANZLEI-PLATZHALTER
+UID-DEADBEEF
+FALLNAME-NEUTRAL
