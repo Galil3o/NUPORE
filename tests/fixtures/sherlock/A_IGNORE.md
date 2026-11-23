@@ -1,9 +1,9 @@
 ---
 id: A_IGNORE
-typ: argument
-art: atomar
-kernaussage: Kein factcheck -- Sherlock ignoriert mich
-herkunft: eigenfall:TESTFALL
-zitat: "Zitat"
-fundstelle: "Rn 1"
+type: argument
+kind: atomic
+core_statement: Kein factcheck -- Sherlock ignoriert mich
+origin: own_case:TESTFALL
+quote: "Zitat"
+citation: "Rn 1"
 ---

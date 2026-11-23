@@ -1,20 +1,20 @@
 import shutil
 from pathlib import Path
 
-from tools.graph.build_index import build_indexes, check_index_sync, write_indexes
-from tools.graph.node import iter_nodes
+from nupore.graph.build_index import build_indexes, check_index_sync, write_indexes
+from nupore.graph.node import iter_nodes
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 VALID = str(FIXTURES / "graph")
 
 
 def test_index_hat_drei_tabellen():
-    assert set(build_indexes(VALID)) == {"urteile", "argumente", "argumentstrukturen"}
+    assert set(build_indexes(VALID)) == {"decisions", "arguments", "argument_structures"}
 
 
 def test_index_enthaelt_jede_entscheidung():
-    idx = build_indexes(VALID)["urteile"]
-    entscheidungen = [n.id for n in iter_nodes(VALID) if n.typ == "entscheidung"]
+    idx = build_indexes(VALID)["decisions"]
+    entscheidungen = [n.id for n in iter_nodes(VALID) if n.type == "decision"]
     assert entscheidungen
     for eid in entscheidungen:
         assert eid in idx
@@ -31,10 +31,10 @@ def test_sync_false_bei_drift(tmp_path):
     dst = tmp_path / "graph"
     shutil.copytree(VALID, dst)
     write_indexes(str(dst))
-    neu = dst / "SUB1_CASE_LAW" / "entscheidungen" / "ArbG-X__2099-01-01__9-Ca-9-99.md"
-    neu.write_text(
-        '---\nid: ArbG-X__2099-01-01__9-Ca-9-99\ntyp: entscheidung\n'
-        'herkunft: eigenfall:X\ngericht: ArbG-X\ndatum: "2099-01-01"\n---\n',
+    new = dst / "SUB1_CASE_LAW" / "entscheidungen" / "ArbG-X__2099-01-01__9-Ca-9-99.md"
+    new.write_text(
+        '---\nid: ArbG-X__2099-01-01__9-Ca-9-99\ntype: decision\n'
+        'origin: own_case:X\ncourt: ArbG-X\ndate: "2099-01-01"\n---\n',
         encoding="utf-8",
     )
     assert check_index_sync(str(dst)) is False

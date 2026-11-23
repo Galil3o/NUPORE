@@ -53,31 +53,33 @@ _StrictLoader.add_constructor(
 @dataclass
 class Node:
     id: str
-    typ: str
-    felder: dict
-    kanten: dict
+    type: str
+    fields: dict
+    edges: dict
     body: str
-    pfad: str = field(default="")
+    path: str = field(default="")
 
-    def kanten_ziele(self, kante: str) -> list[str]:
+    def edge_targets(self, edge: str) -> list[str]:
         """Zielknoten-IDs einer Kante, egal ob Liste von IDs oder von
-        Objekten mit `ziel` (z. B. `vorkommen` mit status/datum).
+        Objekten mit `target` (z. B. `occurrence` mit status/date).
 
-        Ist der Kantenwert keine Liste (z. B. ein Skalar), wird `[]`
-        zurueckgegeben statt zu werfen; der Validator meldet das als
-        BAD_EDGE_SHAPE separat (kein Absturz des ganzen Laufs)."""
-        wert = self.kanten.get(kante)
-        if not isinstance(wert, list):
+        Toleriert fehlerhafte Eintraege, ohne zu werfen: ist der Kantenwert
+        keine Liste, wird `[]` zurueckgegeben; ein Objekt ohne `target` wird
+        uebersprungen. Der Validator meldet die Fehlform strukturiert
+        (BAD_EDGE_SHAPE / OCCURRENCE_INCOMPLETE) statt den Lauf abzubrechen
+        (R-003: `occurrence: [{}]` brach zuvor den gesamten Lauf ab)."""
+        value = self.edges.get(edge)
+        if not isinstance(value, list):
             return []
-        ziele = []
-        for eintrag in wert:
+        targets = []
+        for eintrag in value:
             if isinstance(eintrag, dict):
-                if "ziel" not in eintrag:
-                    raise ValueError(f"{self.id}: Kante {kante} ohne 'ziel'")
-                ziele.append(eintrag["ziel"])
+                target = eintrag.get("target")
+                if target is not None:
+                    targets.append(target)
             else:
-                ziele.append(eintrag)
-        return ziele
+                targets.append(eintrag)
+        return targets
 
 
 def load_node(path: str) -> Node:
@@ -93,11 +95,11 @@ def load_node(path: str) -> Node:
         raise ValueError(f"{path}: YAML-Fehler: {e}") from e
     if not isinstance(fm, dict):
         raise ValueError(f"{path}: Frontmatter ist kein Mapping")
-    if "id" not in fm or "typ" not in fm:
-        raise ValueError(f"{path}: id und typ sind Pflicht")
-    kanten = {k: fm[k] for k in EDGE_TYPES if k in fm}
-    return Node(id=fm["id"], typ=fm["typ"], felder=fm, kanten=kanten,
-                body=m.group(2), pfad=str(path))
+    if "id" not in fm or "type" not in fm:
+        raise ValueError(f"{path}: id und type sind Pflicht")
+    edges = {k: fm[k] for k in EDGE_TYPES if k in fm}
+    return Node(id=fm["id"], type=fm["type"], fields=fm, edges=edges,
+                body=m.group(2), path=str(path))
 
 
 def node_files(root: str) -> Iterator[str]:
@@ -116,5 +118,5 @@ def node_files(root: str) -> Iterator[str]:
 
 def iter_nodes(root: str) -> Iterator[Node]:
     """Alle Knoten unter `root` (siehe `node_files` fuer die Auswahlregeln)."""
-    for pfad in node_files(root):
-        yield load_node(pfad)
+    for path in node_files(root):
+        yield load_node(path)

@@ -1,7 +1,7 @@
 ---
 id: A_BADART
-typ: argument
-art: Atomar
-kernaussage: x
-herkunft: eigenfall:X
+type: argument
+kind: Atomar
+core_statement: x
+origin: own_case:X
 ---

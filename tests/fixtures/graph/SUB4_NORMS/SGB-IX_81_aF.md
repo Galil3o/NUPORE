@@ -1,14 +1,14 @@
 ---
 id: SGB-IX_81_aF
-typ: norm
+type: legal_provision
 fixture: true
-gesetz: SGB-IX
-paragraph: "81"
-fassung: aF
-gueltig_ab: "2001-07-01"
-gueltig_bis: "2017-12-31"
-inhalt: "(Fixture) Pflichten des Arbeitgebers, alte Fassung."
-quelle: "(Fixture)"
-nachfolger: [SGB-IX_164_nF]
+statute: SGB-IX
+section: "81"
+version: aF
+valid_from: "2001-07-01"
+valid_until: "2017-12-31"
+content: "(Fixture) Pflichten des Arbeitgebers, alte Fassung."
+source: "(Fixture)"
+successor: [SGB-IX_164_nF]
 ---
 Fixture-Knoten.

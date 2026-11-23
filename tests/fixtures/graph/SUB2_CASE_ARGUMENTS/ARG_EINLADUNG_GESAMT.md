@@ -1,9 +1,9 @@
 ---
 id: ARG_EINLADUNG_GESAMT
-typ: argument
+type: argument
 fixture: true
-art: zusammengesetzt
-kernaussage: "(Fixture) Verstoss gegen die Einladungspflicht ist Indiz nach Paragraph 22 AGG."
-herkunft: eigenfall:MUSTER
+kind: composite
+core_statement: "(Fixture) Verstoss gegen die Einladungspflicht ist Indiz nach Paragraph 22 AGG."
+origin: own_case:MUSTER
 ---
 Fixture-Argument (zusammengesetzt, ohne eigene Fundstelle).

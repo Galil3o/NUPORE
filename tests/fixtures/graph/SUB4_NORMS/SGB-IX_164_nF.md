@@ -1,12 +1,12 @@
 ---
 id: SGB-IX_164_nF
-typ: norm
+type: legal_provision
 fixture: true
-gesetz: SGB-IX
-paragraph: "164"
-fassung: nF
-gueltig_ab: "2018-01-01"
-inhalt: "(Fixture) Pflichten des Arbeitgebers, neue Fassung."
-quelle: "(Fixture)"
+statute: SGB-IX
+section: "164"
+version: nF
+valid_from: "2018-01-01"
+content: "(Fixture) Pflichten des Arbeitgebers, neue Fassung."
+source: "(Fixture)"
 ---
 Fixture-Knoten.

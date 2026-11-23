@@ -1,7 +1,7 @@
 ---
 id: BVerfG
-typ: gericht
+type: court
 fixture: true
-gerichtsbarkeit: Verfassungsgerichtsbarkeit
-ebene_typ: verfassungsgericht
+jurisdiction: Verfassungsgerichtsbarkeit
+level_type: verfassungsgericht
 ---

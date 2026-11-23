@@ -1,8 +1,8 @@
 ---
 id: E_SPAET
-typ: entscheidung
-herkunft: rechtsprechung:E_SPAET
-gericht: ArbG-X
-datum: "2024-06-01"
-norm_fassung: [N_ALT]
+type: decision
+origin: case_law:E_SPAET
+court: ArbG-X
+date: "2024-06-01"
+provision_version: [N_ALT]
 ---

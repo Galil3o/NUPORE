@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tools.graph.validate import validate
+from nupore.graph.validate import validate
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 VALID = str(FIXTURES / "graph")
@@ -23,19 +23,19 @@ def test_findet_tote_kante():
 
 
 def test_atomares_argument_ohne_fundstelle():
-    assert "NO_FUNDSTELLE" in _codes("no_fundstelle")
+    assert "NO_CITATION" in _codes("no_fundstelle")
 
 
 def test_fehlende_herkunft():
-    assert "NO_HERKUNFT" in _codes("no_herkunft")
+    assert "NO_ORIGIN" in _codes("no_herkunft")
 
 
 def test_norm_nicht_aufloesbar():
-    assert "NORM_UNRESOLVED" in _codes("norm_unresolved")
+    assert "PROVISION_UNRESOLVED" in _codes("norm_unresolved")
 
 
 def test_nachfolger_mit_luecke():
-    assert "NACHFOLGER_TEMPORAL" in _codes("nachfolger_luecke")
+    assert "SUCCESSOR_TEMPORAL" in _codes("nachfolger_luecke")
 
 
 def test_fehlendes_pflichtfeld():
@@ -43,11 +43,11 @@ def test_fehlendes_pflichtfeld():
 
 
 def test_unbekannter_typ():
-    assert "UNKNOWN_TYP" in _codes("unknown_typ")
+    assert "UNKNOWN_TYPE" in _codes("unknown_typ")
 
 
 def test_ungueltiger_art_wert():
-    assert "INVALID_ART" in _codes("invalid_art")
+    assert "INVALID_KIND" in _codes("invalid_art")
 
 
 def test_unbekanntes_feld_umlaut_kante():
@@ -55,7 +55,7 @@ def test_unbekanntes_feld_umlaut_kante():
 
 
 def test_norm_fassung_ausserhalb_geltungszeitraum():
-    assert "NORM_TEMPORAL" in _codes("norm_temporal")
+    assert "PROVISION_TEMPORAL" in _codes("norm_temporal")
 
 
 def test_kaputtes_datum_meldet_statt_crash():
@@ -74,7 +74,7 @@ def test_kante_auf_falschen_zieltyp():
 
 
 def test_gericht_feld_nicht_aufloesbar():
-    assert "GERICHT_UNRESOLVED" in _codes("gericht_unresolved")
+    assert "COURT_UNRESOLVED" in _codes("gericht_unresolved")
 
 
 # --- R-003: Praesenz != gueltiger Inhalt ----------------------------------
@@ -129,86 +129,116 @@ def test_unterstrich_datei_wird_ignoriert():
 # --- Kontrollierte Vokabulare + Originaerquellen --------------------------
 
 def test_ungueltiger_ausgang():
-    assert "INVALID_AUSGANG" in _codes("invalid_ausgang")
+    assert "INVALID_OUTCOME" in _codes("invalid_ausgang")
 
 
 def test_ungueltiger_quelle_typ():
-    assert "INVALID_QUELLE_TYP" in _codes("invalid_quelle_typ")
+    assert "INVALID_SOURCE_TYPE" in _codes("invalid_quelle_typ")
 
 
 def test_ungueltige_aussage_funktion():
-    assert "INVALID_AUSSAGE_FUNKTION" in _codes("invalid_aussage_funktion")
+    assert "INVALID_STATEMENT_FUNCTION" in _codes("invalid_aussage_funktion")
 
 
 def test_amtliche_quelle_ohne_url():
-    assert "MISSING_QUELLE_URL" in _codes("missing_quelle_url")
+    assert "MISSING_SOURCE_URL" in _codes("missing_quelle_url")
 
 
 def test_ungueltiger_vorkommen_status():
-    assert "INVALID_VORKOMMEN_STATUS" in _codes("invalid_vorkommen_status")
+    assert "INVALID_OCCURRENCE_STATUS" in _codes("invalid_vorkommen_status")
 
 
-# --- Norm-Temporal-Bindung ueber norm_stichtag ----------------------------
+# --- Norm-Temporal-Bindung ueber provision_cutoff ----------------------------
 
 def test_norm_stichtag_rebindet_datum():
-    # datum liegt ausserhalb, norm_stichtag innerhalb der Geltung:
-    # der Stichtag ist massgeblich -> kein NORM_TEMPORAL.
-    assert "NORM_TEMPORAL" not in _codes("norm_stichtag_ok")
+    # date liegt ausserhalb, provision_cutoff innerhalb der Geltung:
+    # der Stichtag ist massgeblich -> kein PROVISION_TEMPORAL.
+    assert "PROVISION_TEMPORAL" not in _codes("norm_stichtag_ok")
 
 
 def test_norm_stichtag_ausserhalb_meldet_temporal():
-    # datum liegt innerhalb, norm_stichtag ausserhalb der Geltung:
-    # der Stichtag ist massgeblich -> NORM_TEMPORAL.
-    assert "NORM_TEMPORAL" in _codes("norm_stichtag_bad")
+    # date liegt innerhalb, provision_cutoff ausserhalb der Geltung:
+    # der Stichtag ist massgeblich -> PROVISION_TEMPORAL.
+    assert "PROVISION_TEMPORAL" in _codes("norm_stichtag_bad")
 
 
 # --- Quellen-Zweiteilung, Wertigkeit, Reichweite (Praezedenz-Nutzung) ------
 
 def test_neue_quellentypen_und_praezedenz_valide():
-    # kommentar (SUB6, druck-nativ, kein url-Zwang) + stuetzt + praezedenz_nutzung
+    # commentary (SUB6, druck-nativ, kein url-Zwang) + supports + precedent_use
     # mit gueltiger Reichweite -> sauber.
     assert validate(str(FIXTURES / "valid_erweiterungen")) == []
 
 
 def test_ungueltige_reichweite_stufe():
-    assert "INVALID_REICHWEITE_STUFE" in _codes("invalid_reichweite_stufe")
+    assert "INVALID_REACH" in _codes("invalid_reichweite_stufe")
 
 
 def test_praezedenz_quelle_unaufloesbar():
-    assert "PRAEZEDENZ_UNRESOLVED" in _codes("praezedenz_unresolved")
+    assert "PRECEDENT_UNRESOLVED" in _codes("praezedenz_unresolved")
 
 
 def test_ungueltige_rechtskraft():
-    assert "INVALID_RECHTSKRAFT" in _codes("invalid_rechtskraft")
+    assert "INVALID_FINALITY" in _codes("invalid_rechtskraft")
 
 
 # --- Runde 3: Validator-Haertung (D36) ------------------------------------
 
 def test_listwert_in_quelle_typ_kein_absturz():
     # Liste statt String darf NICHT crashen (TypeError), sondern sauber melden.
-    assert "INVALID_QUELLE_TYP" in _codes("quelle_typ_listwert")
+    assert "INVALID_SOURCE_TYPE" in _codes("quelle_typ_listwert")
 
 
 def test_praezedenz_eintrag_ohne_pflichtfelder():
-    assert "PRAEZEDENZ_INCOMPLETE" in _codes("praezedenz_unvollstaendig")
+    assert "PRECEDENT_INCOMPLETE" in _codes("praezedenz_unvollstaendig")
 
 
 def test_praezedenz_unbekannt_marker_valide():
-    # quelle/stufe = 'unbekannt' ist ein gueltiger, ehrlicher Zustand (D35).
+    # source/reach = 'unknown' ist ein gueltiger, ehrlicher Zustand (D35).
     assert validate(str(FIXTURES / "valid_unbekannt")) == []
 
 
 def test_norm_stichtag_null_faellt_auf_datum():
-    # null darf die Zeitpruefung nicht abschalten: Rueckfall auf datum -> NORM_TEMPORAL.
-    assert "NORM_TEMPORAL" in _codes("norm_stichtag_null_datum")
+    # null darf die Zeitpruefung nicht abschalten: Rueckfall auf date -> PROVISION_TEMPORAL.
+    assert "PROVISION_TEMPORAL" in _codes("norm_stichtag_null_datum")
 
 
 def test_listwert_in_art_kein_absturz():
-    # Liste statt String bei `art` ist unhashbar -> der Mengen-Test `in
-    # _ARGUMENT_ARTEN` warf TypeError und brach den GESAMTEN Lauf ab (Watcher-
-    # Befund BOFH-SGBIX-VALIDATOR-ART, validate.py:226 -- der letzte ungeguardte
-    # Enum). Jetzt per `_is_enum` geguardt. Abnahme (exakt): INVALID_ART UND die
-    # Diagnose des zweiten fehlerhaften Knotens (NO_FUNDSTELLE) im selben Lauf.
+    # Liste statt String bei `kind` ist unhashbar -> der Mengen-Test `in
+    # _ARGUMENT_KINDS` warf TypeError und brach den GESAMTEN Lauf ab (Watcher-
+    # SearchFinding BOFH-SGBIX-VALIDATOR-ART, validate.py:226 -- der letzte ungeguardte
+    # Enum). Jetzt per `_is_enum` geguardt. Abnahme (exakt): INVALID_KIND UND die
+    # Diagnose des zweiten fehlerhaften Knotens (NO_CITATION) im selben Lauf.
     codes = _codes("art_listwert")
-    assert "INVALID_ART" in codes
-    assert "NO_FUNDSTELLE" in codes
+    assert "INVALID_KIND" in codes
+    assert "NO_CITATION" in codes
+
+
+# --- Komplett-Review 2026-11-20: Typsicherheit (R-003-Familie) ---
+
+def test_listwert_in_id_kein_absturz():
+    # Listenwert fuer id ist unhashbar -> Map-Bildung warf TypeError und brach den
+    # GESAMTEN Lauf ab. Jetzt: EMPTY_ID + der zweite fehlerhafte Knoten (NO_CITATION).
+    codes = _codes("id_listwert")
+    assert "EMPTY_ID" in codes
+    assert "NO_CITATION" in codes
+
+
+def test_listwert_in_gericht_kein_absturz():
+    # Listenwert fuer court -> Mengen-Test warf TypeError. Jetzt COURT_UNRESOLVED.
+    assert "COURT_UNRESOLVED" in _codes("gericht_listwert")
+
+
+def test_vorkommen_leer_kein_absturz_und_incomplete():
+    # occurrence: [{}] brach den Lauf ab (edge_targets warf). Jetzt strukturiert gemeldet.
+    assert "OCCURRENCE_INCOMPLETE" in _codes("vorkommen_kaputt")
+
+
+def test_listwert_in_fundstelle_ist_no_fundstelle():
+    # Eine Liste als citation galt als "present" -> jetzt NO_CITATION (Formpruefung).
+    assert "NO_CITATION" in _codes("fundstelle_listwert")
+
+
+def test_ungueltiger_herkunft_praefix():
+    # D5: der origin-Praefix wurde bisher nicht erzwungen.
+    assert "INVALID_ORIGIN_PREFIX" in _codes("herkunft_praefix")

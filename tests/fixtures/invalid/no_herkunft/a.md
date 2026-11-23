@@ -1,8 +1,8 @@
 ---
 id: ARG_OHNE_HERKUNFT
-typ: argument
-art: atomar
-kernaussage: "x"
-zitat: "y"
-fundstelle: "Rn. 1"
+type: argument
+kind: atomic
+core_statement: "x"
+quote: "y"
+citation: "Rn. 1"
 ---

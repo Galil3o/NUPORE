@@ -1,10 +1,10 @@
 ---
 id: ArbG-KR
-typ: gericht
+type: court
 fixture: true
-gerichtsbarkeit: Arbeitsgerichtsbarkeit
-rang: 3
-ebene_typ: fachinstanz
-kfz: KR
-instanz_ueber: [LAG-D]
+jurisdiction: Arbeitsgerichtsbarkeit
+rank: 3
+level_type: fachinstanz
+license_plate: KR
+parent_court: [LAG-D]
 ---

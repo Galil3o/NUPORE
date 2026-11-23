@@ -1,12 +1,12 @@
 ---
 id: FC_MUSTER_01
-typ: factcheck
+type: fact_check
 fixture: true
-fall: MUSTER
-tatsache: "(Fixture) festgestellte Tatsache."
-behauptung: "(Fixture) Behauptung der Gegenseite."
-bewertung: "(Fixture) rechtliche Bewertung."
-beweis_drive: "drive://factchecks/MUSTER/01.pdf"
-norm_fassung: [AGG_22]
+case: MUSTER
+fact: "(Fixture) festgestellte Tatsache."
+assertion: "(Fixture) Behauptung der Gegenseite."
+assessment: "(Fixture) rechtliche Bewertung."
+evidence_drive: "drive://factchecks/MUSTER/01.pdf"
+provision_version: [AGG_22]
 ---
 Fixture-Factcheck.

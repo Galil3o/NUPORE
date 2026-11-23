@@ -1,10 +1,10 @@
 ---
 id: LAG-D
-typ: gericht
+type: court
 fixture: true
-gerichtsbarkeit: Arbeitsgerichtsbarkeit
-rang: 2
-ebene_typ: fachinstanz
-kfz: D
-instanz_ueber: [BAG]
+jurisdiction: Arbeitsgerichtsbarkeit
+rank: 2
+level_type: fachinstanz
+license_plate: D
+parent_court: [BAG]
 ---

@@ -1,39 +1,39 @@
 # Synthetisches Fristen-Register fuer Guardian-Tests (keine realen Falldaten).
-- frist_id: F-UEBER
-  faelligkeit: "2026-01-10"
+- deadline_id: F-UEBER
+  due_date: "2026-01-10"
   status: offen
-  typ: rechtlich
-  bestaetigt: true
-  fallreferenz: FALL-A
-  quelle: "Gericht Verfuegung"
-  ausloeser: "Zustellung"
-- frist_id: F-NAHE
-  faelligkeit: "2026-01-22"
+  type: rechtlich
+  confirmed: true
+  case_ref: FALL-A
+  source: "Gericht Verfuegung"
+  trigger: "Zustellung"
+- deadline_id: F-NAHE
+  due_date: "2026-01-22"
   status: offen
-  typ: rechtlich
-  bestaetigt: true
-  fallreferenz: FALL-A
-- frist_id: F-FERN
-  faelligkeit: "2026-03-01"
+  type: rechtlich
+  confirmed: true
+  case_ref: FALL-A
+- deadline_id: F-FERN
+  due_date: "2026-03-01"
   status: offen
-  typ: intern
-  bestaetigt: true
-  fallreferenz: FALL-B
-- frist_id: F-ERLEDIGT
-  faelligkeit: "2026-01-05"
-  status: erfuellt
-  typ: rechtlich
-  bestaetigt: true
-  fallreferenz: FALL-A
-- frist_id: F-UNBEST
-  faelligkeit: "2026-01-18"
+  type: intern
+  confirmed: true
+  case_ref: FALL-B
+- deadline_id: F-ERLEDIGT
+  due_date: "2026-01-05"
+  status: fulfilled
+  type: rechtlich
+  confirmed: true
+  case_ref: FALL-A
+- deadline_id: F-UNBEST
+  due_date: "2026-01-18"
   status: offen
-  typ: rechtlich
-  bestaetigt: false
-  fallreferenz: FALL-C
-- frist_id: F-KAPUTT
-  faelligkeit: "nicht-datum"
+  type: rechtlich
+  confirmed: false
+  case_ref: FALL-C
+- deadline_id: F-KAPUTT
+  due_date: "nicht-date"
   status: offen
-  typ: intern
-  bestaetigt: true
-  fallreferenz: FALL-D
+  type: intern
+  confirmed: true
+  case_ref: FALL-D
