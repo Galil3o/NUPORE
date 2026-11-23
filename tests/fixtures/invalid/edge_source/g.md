@@ -1,5 +1,5 @@
 ---
 id: G_X
-typ: gericht
-gerichtsbarkeit: Arbeitsgerichtsbarkeit
+type: court
+jurisdiction: Arbeitsgerichtsbarkeit
 ---

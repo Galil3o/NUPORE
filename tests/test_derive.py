@@ -1,44 +1,44 @@
-from tools.graph.derive import (
-    derive_fein_rang,
-    derive_verbindlichkeit,
-    ist_schwebend,
+from nupore.graph.derive import (
+    derive_fine_rank,
+    derive_authority,
+    is_pending,
 )
 
 
 def test_norm_ist_verbindlich():
-    assert derive_verbindlichkeit({"quelle_typ": "amtlicher_normtext"}) == "verbindlich"
+    assert derive_authority({"source_type": "official_statute_text"}) == "binding"
 
 
 def test_apex_rechtskraeftig_ist_verbindlich():
-    f = {"quelle_typ": "amtliche_rechtsprechung", "rechtskraft": "rechtskraeftig"}
-    assert derive_verbindlichkeit(f, gericht_id="BAG") == "verbindlich"
-    assert derive_verbindlichkeit(f, gericht_rang=1) == "verbindlich"  # Rang 1 = Apex
+    f = {"source_type": "official_case_law", "finality": "final"}
+    assert derive_authority(f, gericht_id="BAG") == "binding"
+    assert derive_authority(f, gericht_rang=1) == "binding"  # Rang 1 = Apex
 
 
 def test_apex_ohne_rechtskraft_schwebend_und_nicht_verbindlich():
-    f = {"quelle_typ": "amtliche_rechtsprechung", "rechtskraft": "nicht_rechtskraeftig"}
-    assert derive_verbindlichkeit(f, gericht_id="BVerfG") == "nicht_verbindlich"
-    assert ist_schwebend(f, gericht_id="BVerfG") is True
+    f = {"source_type": "official_case_law", "finality": "not_final"}
+    assert derive_authority(f, gericht_id="BVerfG") == "non_binding"
+    assert is_pending(f, gericht_id="BVerfG") is True
 
 
 def test_apex_unbekannte_rechtskraft_konservativ_schwebend():
-    f = {"quelle_typ": "amtliche_rechtsprechung"}  # rechtskraft fehlt -> wie unbekannt
-    assert derive_verbindlichkeit(f, gericht_id="BAG") == "nicht_verbindlich"
-    assert ist_schwebend(f, gericht_id="BAG") is True
+    f = {"source_type": "official_case_law"}  # finality fehlt -> wie unknown
+    assert derive_authority(f, gericht_id="BAG") == "non_binding"
+    assert is_pending(f, gericht_id="BAG") is True
 
 
 def test_instanzgericht_nicht_verbindlich_mit_fein_rang():
-    f = {"quelle_typ": "amtliche_rechtsprechung", "rechtskraft": "rechtskraeftig"}
-    # Nicht-Apex (z. B. LAG, rang 2) -> nicht_verbindlich, Fein-Rang Instanz (10).
-    assert derive_verbindlichkeit(f, gericht_rang=2) == "nicht_verbindlich"
-    assert derive_fein_rang(f, gericht_rang=2) == 10
+    f = {"source_type": "official_case_law", "finality": "final"}
+    # Nicht-Apex (z. B. LAG, rank 2) -> non_binding, Fein-Rang Instanz (10).
+    assert derive_authority(f, gericht_rang=2) == "non_binding"
+    assert derive_fine_rank(f, gericht_rang=2) == 10
 
 
 def test_kommentar_fein_rang_und_nicht_verbindlich():
-    f = {"quelle_typ": "kommentar"}
-    assert derive_verbindlichkeit(f) == "nicht_verbindlich"
-    assert derive_fein_rang(f) == 30
+    f = {"source_type": "commentary"}
+    assert derive_authority(f) == "non_binding"
+    assert derive_fine_rank(f) == 30
 
 
 def test_verbindliche_quelle_hat_keinen_fein_rang():
-    assert derive_fein_rang({"quelle_typ": "amtlicher_normtext"}) is None
+    assert derive_fine_rank({"source_type": "official_statute_text"}) is None

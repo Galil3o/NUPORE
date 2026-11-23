@@ -1,17 +1,17 @@
 ---
 id: ARG_EIGEN_TEST
-typ: argument
-art: atomar
-kernaussage: "Eigene Rechtsposition, gestuetzt auf eine Kommentarstelle."
-herkunft: "eigenfall:TEST"
-zitat: "... eigenes Zitat ..."
-fundstelle: "Schriftsatz S. 1"
-stuetzt: [LIT_ERFK_164]
-praezedenz_nutzung:
-  - quelle: LIT_ERFK_164
-    stufe: vertretbar_weit
-    texthaken: "Rn. 10"
-    angriffsflaeche: "abweichende Literaturstimmen denkbar"
+type: argument
+kind: atomic
+core_statement: "Eigene Rechtsposition, gestuetzt auf eine Kommentarstelle."
+origin: "own_case:TEST"
+quote: "... eigenes Zitat ..."
+citation: "Schriftsatz S. 1"
+supports: [LIT_ERFK_164]
+precedent_use:
+  - source: LIT_ERFK_164
+    reach: defensibly_broad
+    text_hook: "Rn. 10"
+    vulnerability: "abweichende Literaturstimmen denkbar"
 ---
 Nutzt die Literaturmeinung mit vertretbarer Reichweite; stuetzt-Kante + strukturierte
 praezedenz_nutzung mit gueltiger Reichweite-Stufe.

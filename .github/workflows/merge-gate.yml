@@ -4,15 +4,21 @@ name: merge-gate
 on:
   pull_request:
     branches: [main]
+
+# Least-privilege Token (Komplett-Review 2026-11-20).
+permissions:
+  contents: read
+
 jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
+      # TODO: Actions auf Commit-SHA pinnen (Lieferkette) -- bewusst offen fuer den Phase-1-Snapshot.
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
       - name: Abhaengigkeiten
-        run: pip install pyyaml pytest
+        run: pip install "pyyaml==6.0.2" "pytest==8.3.4"
       - name: Tests (Engine ueber synthetische Fixtures)
         run: python -m pytest

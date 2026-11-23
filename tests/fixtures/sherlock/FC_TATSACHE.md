@@ -1,7 +1,7 @@
 ---
 id: FC_TATSACHE
-typ: factcheck
-fall: TESTFALL
-tatsache: "Unstreitig: Z"
-beweis_drive: "uid-abc"
+type: fact_check
+case: TESTFALL
+fact: "Unstreitig: Z"
+evidence_drive: "uid-abc"
 ---

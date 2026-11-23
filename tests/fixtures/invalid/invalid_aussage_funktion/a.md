@@ -1,11 +1,11 @@
 ---
 id: A_BADFUNKTION
-typ: argument
-art: atomar
-kernaussage: "x"
-zitat: "y"
-fundstelle: "Rn. 1"
-herkunft: eigenfall:X
-aussage_funktion: zeugenaussage
+type: argument
+kind: atomic
+core_statement: "x"
+quote: "y"
+citation: "Rn. 1"
+origin: own_case:X
+statement_function: zeugenaussage
 ---
 Repro: aussage_funktion 'zeugenaussage' ist nicht in aussage_funktionen.

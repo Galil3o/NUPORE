@@ -13,34 +13,34 @@ def test_schema_hat_alle_typen():
     schema = _load()
 
     assert set(schema["node_types"]) == {
-        "entscheidung",
+        "decision",
         "argument",
-        "argumentstruktur",
-        "norm",
-        "inkonsistenz",
-        "handakte",
-        "factcheck",
-        "schriftsatz",
-        "gericht",
+        "argument_structure",
+        "legal_provision",
+        "inconsistency",
+        "case_file",
+        "fact_check",
+        "brief",
+        "court",
     }
 
     erwartete_kanten = {
-        "instanz_weiter",
-        "instanz_ueber",
-        "verfassungsbeschwerde_gegen",
-        "vorlage_nach",
-        "komponente_von",
-        "uebertraegt_auf",
-        "norm_fassung",
-        "nachfolger",
-        "vorkommen",
+        "appeal_to",
+        "parent_court",
+        "constitutional_complaint_against",
+        "referral_to",
+        "component_of",
+        "applies_to",
+        "provision_version",
+        "successor",
+        "occurrence",
     }
     assert erwartete_kanten <= set(schema["edge_types"])
 
 
 def test_jeder_knotentyp_hat_pflichtfelder():
     schema = _load()
-    for typ, spec in schema["node_types"].items():
-        assert "pflichtfelder" in spec, f"{typ} ohne pflichtfelder"
-        assert "id" in spec["pflichtfelder"], f"{typ}: id muss Pflichtfeld sein"
-        assert "typ" in spec["pflichtfelder"], f"{typ}: typ muss Pflichtfeld sein"
+    for type, spec in schema["node_types"].items():
+        assert "required_fields" in spec, f"{type} ohne required_fields"
+        assert "id" in spec["required_fields"], f"{type}: id muss Pflichtfeld sein"
+        assert "type" in spec["required_fields"], f"{type}: type muss Pflichtfeld sein"

@@ -1,8 +1,8 @@
 ---
 id: BAG
-typ: gericht
+type: court
 fixture: true
-gerichtsbarkeit: Arbeitsgerichtsbarkeit
-rang: 1
-ebene_typ: fachinstanz
+jurisdiction: Arbeitsgerichtsbarkeit
+rank: 1
+level_type: fachinstanz
 ---

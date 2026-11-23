@@ -1,6 +1,6 @@
 ---
 id: ArbG-T
-typ: gericht
-gerichtsbarkeit: Arbeitsgerichtsbarkeit
+type: court
+jurisdiction: Arbeitsgerichtsbarkeit
 ---
 Hilfsknoten fuer die Fixture.

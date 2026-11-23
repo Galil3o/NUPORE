@@ -1,10 +1,10 @@
 ---
 id: N_BADQUELLE
-typ: norm
-gesetz: X
-paragraph: "1"
-fassung: nF
-gueltig_ab: "2020-01-01"
-quelle_typ: wikipedia
+type: legal_provision
+statute: X
+section: "1"
+version: nF
+valid_from: "2020-01-01"
+source_type: wikipedia
 ---
 Repro: quelle_typ 'wikipedia' ist nicht in quelle_typen.

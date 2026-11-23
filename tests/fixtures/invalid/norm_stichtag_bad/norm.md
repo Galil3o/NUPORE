@@ -1,9 +1,9 @@
 ---
 id: N_GELT
-typ: norm
-gesetz: X
-paragraph: "1"
-fassung: nF
-gueltig_ab: "2018-01-01"
-gueltig_bis: "2020-12-31"
+type: legal_provision
+statute: X
+section: "1"
+version: nF
+valid_from: "2018-01-01"
+valid_until: "2020-12-31"
 ---

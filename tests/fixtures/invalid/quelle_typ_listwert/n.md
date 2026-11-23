@@ -1,11 +1,11 @@
 ---
 id: N_LISTQT
-typ: norm
-gesetz: X
-paragraph: "1"
-fassung: nF
-gueltig_ab: "2020-01-01"
-quelle_typ: [kommentar]
+type: legal_provision
+statute: X
+section: "1"
+version: nF
+valid_from: "2020-01-01"
+source_type: [kommentar]
 ---
 Repro: quelle_typ als Liste (unhashbar) -> INVALID_QUELLE_TYP, KEIN TypeError-Absturz
 (D36/Befund 1a).

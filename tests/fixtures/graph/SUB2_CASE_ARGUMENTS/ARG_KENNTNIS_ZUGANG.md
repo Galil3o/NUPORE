@@ -1,16 +1,16 @@
 ---
 id: ARG_KENNTNIS_ZUGANG
-typ: argument
+type: argument
 fixture: true
-art: atomar
-kernaussage: "(Fixture) Zugang i.S.d. Paragraph 130 BGB setzt die Moeglichkeit der Kenntnisnahme voraus."
-zitat: "(Fixture) \"... der Zugang ...\""
-fundstelle: "Rn. 23"
-herkunft: rechtsprechung:BAG__2025-06-05__8-AZR-100-25
-norm_fassung: [SGB-IX_164_nF]
-vorkommen:
-  - ziel: SS_ANSPRUCH
-    status: neu
-    datum: "2024-01-10"
+kind: atomic
+core_statement: "(Fixture) Zugang i.S.d. Paragraph 130 BGB setzt die Moeglichkeit der Kenntnisnahme voraus."
+quote: "(Fixture) \"... der Zugang ...\""
+citation: "Rn. 23"
+origin: case_law:BAG__2025-06-05__8-AZR-100-25
+provision_version: [SGB-IX_164_nF]
+occurrence:
+  - target: SS_ANSPRUCH
+    status: new
+    date: "2024-01-10"
 ---
 Fixture-Argument (atomar).

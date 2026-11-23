@@ -1,8 +1,8 @@
 ---
 id: A_NULLART
-typ: argument
-art: null
-kernaussage: "x"
-herkunft: eigenfall:X
+type: argument
+kind: null
+core_statement: "x"
+origin: own_case:X
 ---
 Pflichtfeld art ist vorhanden, aber null.

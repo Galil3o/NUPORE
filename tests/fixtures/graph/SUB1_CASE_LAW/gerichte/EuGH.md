@@ -1,7 +1,7 @@
 ---
 id: EuGH
-typ: gericht
+type: court
 fixture: true
-gerichtsbarkeit: Unionsgerichtsbarkeit
-ebene_typ: unionsgericht
+jurisdiction: Unionsgerichtsbarkeit
+level_type: unionsgericht
 ---

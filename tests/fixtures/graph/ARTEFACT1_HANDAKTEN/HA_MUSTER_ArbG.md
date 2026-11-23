@@ -1,9 +1,9 @@
 ---
 id: HA_MUSTER_ArbG
-typ: handakte
+type: case_file
 fixture: true
-fall: MUSTER
-instanz: ArbG
-quelle_drive: "drive://handakten/MUSTER/ArbG/"
+case: MUSTER
+court_instance: ArbG
+source_drive: "drive://handakten/MUSTER/ArbG/"
 ---
 Fixture-Handakte.

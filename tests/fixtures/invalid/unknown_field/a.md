@@ -1,10 +1,10 @@
 ---
 id: A_STRAYKEY
-typ: argument
-art: atomar
-kernaussage: x
-zitat: "y"
-fundstelle: "Rn. 1"
-herkunft: eigenfall:X
+type: argument
+kind: atomic
+core_statement: x
+quote: "y"
+citation: "Rn. 1"
+origin: own_case:X
 instanz_zurück: [GEISTERKNOTEN]
 ---

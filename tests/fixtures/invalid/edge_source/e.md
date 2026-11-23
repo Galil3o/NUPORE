@@ -1,10 +1,10 @@
 ---
 id: E_WRONGEDGE
-typ: entscheidung
-herkunft: eigenfall:X
-gericht: G_X
-datum: "2024-01-01"
-vorkommen: [E_WRONGEDGE]
-nachfolger: [G_X]
+type: decision
+origin: own_case:X
+court: G_X
+date: "2024-01-01"
+occurrence: [E_WRONGEDGE]
+successor: [G_X]
 ---
 Repro R-002: entscheidung mit vorkommen (nur argument) und nachfolger (nur norm).

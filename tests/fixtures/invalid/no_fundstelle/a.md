@@ -1,7 +1,7 @@
 ---
 id: ARG_OHNE_FUNDSTELLE
-typ: argument
-art: atomar
-kernaussage: "x"
-herkunft: eigenfall:X
+type: argument
+kind: atomic
+core_statement: "x"
+origin: own_case:X
 ---

@@ -1,12 +1,12 @@
 ---
 id: AGG_22
-typ: norm
+type: legal_provision
 fixture: true
-gesetz: AGG
-paragraph: "22"
-fassung: nF
-gueltig_ab: "2006-08-18"
-inhalt: "(Fixture) Beweislast."
-quelle: "(Fixture)"
+statute: AGG
+section: "22"
+version: nF
+valid_from: "2006-08-18"
+content: "(Fixture) Beweislast."
+source: "(Fixture)"
 ---
 Fixture-Knoten.

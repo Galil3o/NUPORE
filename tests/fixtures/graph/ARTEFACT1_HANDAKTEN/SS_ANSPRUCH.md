@@ -1,9 +1,9 @@
 ---
 id: SS_ANSPRUCH
-typ: schriftsatz
+type: brief
 fixture: true
-stufe: Anspruchsschreiben
-fall: MUSTER
-datum: "2024-01-10"
+stage: Anspruchsschreiben
+case: MUSTER
+date: "2024-01-10"
 ---
 Fixture-Schriftsatz.

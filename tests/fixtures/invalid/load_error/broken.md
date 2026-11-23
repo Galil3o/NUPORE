@@ -1,10 +1,10 @@
 ---
 id: N_DUP
-typ: norm
+type: legal_provision
 id: N_DUP_2
-gesetz: X
-paragraph: "1"
-fassung: nF
-gueltig_ab: "2020-01-01"
+statute: X
+section: "1"
+version: nF
+valid_from: "2020-01-01"
 ---
 Doppelter YAML-Key id -> LOAD_ERROR, Lauf bricht nicht ab.
